@@ -1,0 +1,20 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: __STORAGE_CLASS_NAME__
+provisioner: rook-ceph.rbd.csi.ceph.com
+allowVolumeExpansion: true
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+parameters:
+  clusterID: __ROOK_NAMESPACE__
+  pool: __MIRRORED_POOL_NAME__
+  imageFormat: "2"
+  imageFeatures: layering,exclusive-lock,object-map,fast-diff
+  csi.storage.k8s.io/fstype: ext4
+  csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+  csi.storage.k8s.io/provisioner-secret-namespace: __ROOK_NAMESPACE__
+  csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+  csi.storage.k8s.io/controller-expand-secret-namespace: __ROOK_NAMESPACE__
+  csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+  csi.storage.k8s.io/node-stage-secret-namespace: __ROOK_NAMESPACE__

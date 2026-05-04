@@ -1,0 +1,84 @@
+[settings]
+env_shell_expand = true
+
+[env]
+SOURCE_CLUSTER_PROFILE = "cluster-a"
+RECOVERY_CLUSTER_PROFILE = "cluster-b"
+SOURCE_CLUSTER_ID = "cluster-a"
+RECOVERY_CLUSTER_ID = "cluster-b"
+BROKER_CONTEXT = "cluster-b"
+
+# Keep this short because VM driver state paths can be used in hypervisor sockets.
+MINIKUBE_HOME = "{{env.HOME}}/.minikube/overlap-cidr-rbd-mirror"
+MINIKUBE_VERSION = "v1.38.1"
+KUBECTL_VERSION = "latest"
+KUBERNETES_VERSION = "v1.33.9"
+MINIKUBE_ISO_URL = ""
+MINIKUBE_DRIVER = "kvm2"
+# This is libvirt's QEMU connection URI for the kvm2 driver, not the minikube
+# qemu/qemu2 driver.
+MINIKUBE_KVM_QEMU_URI = "qemu:///system"
+MINIKUBE_APISERVER_IPS = ""
+MINIKUBE_APISERVER_NAME = "minikubeCA"
+MINIKUBE_APISERVER_NAMES = "cluster-a,cluster-b,localhost"
+CONTAINER_RUNTIME = "docker"
+MINIKUBE_CPUS = "2"
+MINIKUBE_MEMORY = "12288"
+MINIKUBE_DISK_SIZE = "60g"
+MINIKUBE_NODES = "1"
+MINIKUBE_EXTRA_DISKS = "3"
+
+# Intentionally non-shared node InternalIP network.
+# These addresses are configured on a dummy interface inside each VM, so the
+# CIDR overlaps by address range but is not a shared L2/L3 network.
+CLUSTER_INTERNAL_IFACE = "lab0"
+CLUSTER_INTERNAL_CIDR = "172.16.128.0/22"
+SOURCE_CLUSTER_INTERNAL_IP = "172.16.130.11"
+RECOVERY_CLUSTER_INTERNAL_IP = "172.16.130.12"
+
+# Intentionally overlapping cluster networks.
+# Keep Pod/Service CIDRs visually distinct from node InternalIP and Globalnet.
+POD_CIDR = "192.168.200.0/22"
+SERVICE_CIDR = "192.168.208.0/22"
+SERVICE_DNS_IP = "192.168.208.10"
+
+BROKER_NAMESPACE = "submariner-k8s-broker"
+BROKER_INFO_FILE = ".state/broker-info.subm"
+BROKER_HOST = ""
+BROKER_URL = ""
+SUBCTL_CHECK_BROKER_CERTIFICATE = "false"
+GLOBALNET_CIDR_RANGE = "10.0.0.0/8"
+SOURCE_GLOBALNET_CIDR = "10.1.0.0/16"
+RECOVERY_GLOBALNET_CIDR = "10.2.0.0/16"
+SUBMARINER_CABLE_DRIVER = "vxlan"
+SUBMARINER_HEALTH_CHECK = "false"
+SUBMARINER_USE_NFTABLES = "false"
+SUBCTL_VERSION = "latest"
+
+ROOK_NAMESPACE = "rook-ceph"
+ROOK_VERSION = "v1.19.4"
+ROOK_CEPH_OPERATOR_IMAGE = "ghcr.io/rook/ceph:v1.19.4"
+CEPH_CSI_OPERATOR_IMAGE = "quay.io/cephcsi/ceph-csi-operator:v0.6.0"
+CEPH_IMAGE = "quay.io/ceph/ceph:v19.2.3"
+BUSYBOX_IMAGE = "registry.k8s.io/e2e-test-images/busybox:1.29-4"
+ROOK_CLUSTER_NAME = "rook-ceph"
+ROOK_DATA_DIR = "/var/lib/rook"
+# Match minikube extra disks. kvm2 usually exposes them as vdb/vdc/vdd; keep
+# sd[b-d] for environments where disks are exposed as SCSI.
+ROOK_OSD_DEVICE_FILTER = "^vd[b-d]$|^sd[b-d]$"
+MIRRORED_POOL_NAME = "mirrored-pool"
+RBD_MIRROR_NAME = "rbd-mirror"
+STORAGE_CLASS_NAME = "ceph-rbd-mirror"
+
+TEST_NAMESPACE = "mirror-test"
+TEST_PVC_NAME = "test-rbd"
+TEST_POD_NAME = "writer"
+
+GLOBALNET_TEST_NAMESPACE = "globalnet-test"
+GLOBALNET_TEST_APP = "echo"
+GLOBALNET_TEST_SERVICE = "echo"
+GLOBALNET_TEST_CLIENT = "globalnet-client"
+GLOBALNET_TEST_CONNECTION_WAIT_RETRIES = "20"
+GLOBALNET_TEST_CONNECTION_WAIT_SECONDS = "5"
+GLOBALNET_SOURCE_CONTEXT = "cluster-a"
+GLOBALNET_RECOVERY_CONTEXT = "cluster-b"

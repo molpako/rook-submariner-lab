@@ -1,0 +1,15 @@
+apiVersion: ceph.rook.io/v1
+kind: CephBlockPool
+metadata:
+  name: __MIRRORED_POOL_NAME__
+  namespace: __ROOK_NAMESPACE__
+spec:
+  replicated:
+    size: 1
+    requireSafeReplicaSize: false
+  compressionMode: none
+  mirroring:
+    enabled: true
+    mode: image
+    snapshotSchedules:
+      - interval: 1h

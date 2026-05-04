@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: __TEST_POD_NAME__
+  namespace: __TEST_NAMESPACE__
+  labels:
+    app: __TEST_POD_NAME__
+spec:
+  restartPolicy: Always
+  containers:
+    - name: __TEST_POD_NAME__
+      image: registry.k8s.io/e2e-test-images/busybox:1.29-4
+      command:
+        - /bin/sh
+        - -ec
+        - |
+          while true; do
+            date >> /data/out.txt
+            sleep 5
+          done
+      volumeMounts:
+        - name: data
+          mountPath: /data
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: __TEST_PVC_NAME__

@@ -1,0 +1,7 @@
+apiVersion: ceph.rook.io/v1
+kind: CephRBDMirror
+metadata:
+  name: __RBD_MIRROR_NAME__
+  namespace: __ROOK_NAMESPACE__
+spec:
+  count: 1

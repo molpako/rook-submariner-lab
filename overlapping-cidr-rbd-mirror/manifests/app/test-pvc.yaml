@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: __TEST_PVC_NAME__
+  namespace: __TEST_NAMESPACE__
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: __STORAGE_CLASS_NAME__
